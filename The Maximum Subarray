@@ -1,0 +1,83 @@
+import java.io.*;
+import java.util.*;
+
+public class Solution {
+
+    static class Result {
+
+        public static List<Integer> maxSubarray(List<Integer> arr) {
+
+            int maxSubarray = arr.get(0);
+            int currentSum = arr.get(0);
+
+            int maxSubsequence = arr.get(0);
+            boolean hasPositive = arr.get(0) > 0;
+
+            // Maximum subarray
+            for (int i = 1; i < arr.size(); i++) {
+
+                currentSum = Math.max(arr.get(i), currentSum + arr.get(i));
+
+                maxSubarray = Math.max(maxSubarray, currentSum);
+            }
+
+            // Maximum subsequence
+            for (int i = 1; i < arr.size(); i++) {
+
+                if (arr.get(i) > 0) {
+                    hasPositive = true;
+                }
+
+                maxSubsequence = Math.max(maxSubsequence, arr.get(i));
+            }
+
+            if (hasPositive) {
+                maxSubsequence = 0;
+
+                for (int num : arr) {
+                    if (num > 0) {
+                        maxSubsequence += num;
+                    }
+                }
+            }
+
+            return Arrays.asList(maxSubarray, maxSubsequence);
+        }
+    }
+
+    public static void main(String[] args) throws IOException {
+
+        BufferedReader bufferedReader =
+                new BufferedReader(new InputStreamReader(System.in));
+
+        BufferedWriter bufferedWriter =
+                new BufferedWriter(new FileWriter(System.getenv("OUTPUT_PATH")));
+
+        int t = Integer.parseInt(bufferedReader.readLine().trim());
+
+        for (int tItr = 0; tItr < t; tItr++) {
+
+            int n = Integer.parseInt(bufferedReader.readLine().trim());
+
+            String[] arrItems =
+                    bufferedReader.readLine().trim().split(" ");
+
+            List<Integer> arr = new ArrayList<>();
+
+            for (String item : arrItems) {
+                arr.add(Integer.parseInt(item));
+            }
+
+            List<Integer> result = Result.maxSubarray(arr);
+
+            bufferedWriter.write(
+                    result.get(0) + " " + result.get(1)
+            );
+
+            bufferedWriter.newLine();
+        }
+
+        bufferedReader.close();
+        bufferedWriter.close();
+    }
+}
