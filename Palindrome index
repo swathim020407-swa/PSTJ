@@ -1,0 +1,54 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+bool isPalindrome(const string& s, int left, int right) {
+while (left < right) {
+if (s[left] != s[right]) {
+return false;
+}
+left++;
+right--;
+}
+return true;
+}
+
+int palindromeIndex(string s) {
+int left = 0;
+int right = s.length() - 1;
+
+while (left < right) {
+    if (s[left] != s[right]) {
+        
+        if (isPalindrome(s, left + 1, right)) {
+            return left;
+        }
+        
+        if (isPalindrome(s, left, right - 1)) {
+            return right;
+        }
+        
+        return -1;
+    }
+
+    left++;
+    right--;
+}
+
+return -1;
+
+}
+
+int main() {
+int q;
+cin >> q;
+
+while (q--) {
+    string s;
+    cin >> s;
+
+    cout << palindromeIndex(s) << endl;
+}
+
+return 0;
+
+}
