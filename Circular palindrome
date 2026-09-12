@@ -1,0 +1,104 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+int main() {
+ios::sync_with_stdio(false);
+cin.tie(NULL);
+
+int n;
+string s;
+
+cin >> n;
+cin >> s;
+
+string str = s + s;
+int m = str.length();
+
+vector<int> d1(m);
+vector<int> d2(m);
+
+// Odd length palindromes
+int l = 0, r = -1;
+
+for (int i = 0; i < m; i++) {
+    int k;
+
+    if (i > r)
+        k = 1;
+    else
+        k = min(d1[l + r - i], r - i + 1);
+
+    while (i - k >= 0 && i + k < m &&
+           str[i - k] == str[i + k]) {
+        k++;
+    }
+
+    d1[i] = k;
+
+    if (i + k - 1 > r) {
+        l = i - k + 1;
+        r = i + k - 1;
+    }
+}
+
+// Even length palindromes
+l = 0;
+r = -1;
+
+for (int i = 0; i < m; i++) {
+    int k;
+
+    if (i > r)
+        k = 0;
+    else
+        k = min(d2[l + r - i + 1], r - i + 1);
+
+    while (i - k - 1 >= 0 && i + k < m &&
+           str[i - k - 1] == str[i + k]) {
+        k++;
+    }
+
+    d2[i] = k;
+
+    if (i + k - 1 > r) {
+        l = i - k;
+        r = i + k - 1;
+    }
+}
+
+vector<int> answer(n, 1);
+
+for (int start = 0; start < n; start++) {
+    int best = 1;
+
+    int L = start;
+    int R = start + n - 1;
+
+    for (int center = L; center <= R; center++) {
+        int radius = d1[center];
+
+        int possible = min(center - L, R - center);
+        int actual = min(radius - 1, possible);
+
+        best = max(best, 2 * actual + 1);
+    }
+
+    for (int center = L + 1; center <= R; center++) {
+        int radius = d2[center];
+
+        int possible = min(center - L, R - center + 1);
+        int actual = min(radius, possible);
+
+        best = max(best, 2 * actual);
+    }
+
+    answer[start] = best;
+}
+
+for (int i = 0; i < n; i++) {
+    cout << answer[i] << '\n';
+}
+
+return 0;
+
+}
