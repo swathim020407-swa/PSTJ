@@ -1,0 +1,34 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+string twoStrings(string s1, string s2) {
+bool found[26] = {false};
+
+for (char c : s1) {
+    found[c - 'a'] = true;
+}
+
+for (char c : s2) {
+    if (found[c - 'a']) {
+        return "YES";
+    }
+}
+
+return "NO";
+
+}
+
+int main() {
+int t;
+cin >> t;
+
+while (t--) {
+    string s1, s2;
+    cin >> s1 >> s2;
+
+    cout << twoStrings(s1, s2) << endl;
+}
+
+return 0;
+
+}
