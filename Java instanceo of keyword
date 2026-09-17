@@ -1,0 +1,64 @@
+import java.util.*;
+
+class Student {
+}
+
+class Rockstar {
+}
+
+class Hacker {
+}
+
+public class Solution {
+
+    static void count(ArrayList myList) {
+        int studentCount = 0;
+        int rockstarCount = 0;
+        int hackerCount = 0;
+
+        for (int i = 0; i < myList.size(); i++) {
+
+            if (myList.get(i) instanceof Student) {
+                studentCount++;
+            }
+
+            if (myList.get(i) instanceof Rockstar) {
+                rockstarCount++;
+            }
+
+            if (myList.get(i) instanceof Hacker) {
+                hackerCount++;
+            }
+        }
+
+        System.out.println(studentCount + " " + rockstarCount + " " + hackerCount);
+    }
+
+    public static void main(String[] args) {
+
+        Scanner sc = new Scanner(System.in);
+
+        int n = sc.nextInt();
+
+        ArrayList myList = new ArrayList();
+
+        for (int i = 0; i < n; i++) {
+
+            String s = sc.next();
+
+            if (s.equals("Student")) {
+                myList.add(new Student());
+            }
+
+            if (s.equals("Rockstar")) {
+                myList.add(new Rockstar());
+            }
+
+            if (s.equals("Hacker")) {
+                myList.add(new Hacker());
+            }
+        }
+
+        count(myList);
+    }
+}
